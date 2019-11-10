@@ -5,6 +5,7 @@
     android:layout_height="match_parent">
 
     <ImageView
+        android:id="@+id/hafezTomb"
         android:src="@drawable/hafez"
         android:scaleType="centerCrop"
         android:layout_width="match_parent"
