@@ -2,13 +2,15 @@ package com.mohsen.falehafez_new.util
 
 import android.content.Context
 import android.content.Intent
+import android.util.Log
 import com.mohsen.falehafez_new.R
 
-class ResourceHelper private constructor(context: Context) {
+class ResourceHelper(context: Context) {
 
     //private val questionList = mutableListOf<IQQuestion>()
     private lateinit var randomPoem : String
     private lateinit var poem:List<String>
+    private var rand: Int = 0
 
 
     companion object {
@@ -24,13 +26,22 @@ class ResourceHelper private constructor(context: Context) {
 
     init {
         //getData(context)
-        getPoemData(context)
+        genRandomNumber()
+        getPoemData(context,getRandomNumber())
     }
 
-    fun getPoemData(context: Context){
+    fun getPoemData(context: Context,index: Int){
         val poemArray=context.resources.getStringArray(R.array.hafez)
-        val rnd = (0..494).random()
-        randomPoem= poemArray[rnd]
+
+        Log.d("HafezFragment","index is : $index")
+        randomPoem= poemArray[index]
+    }
+
+    fun genRandomNumber() {
+        rand =  (0..494).random()
+    }
+    fun getRandomNumber(): Int {
+        return rand
     }
 
     fun getPoems():List<String>{
@@ -41,6 +52,18 @@ class ResourceHelper private constructor(context: Context) {
 
     fun getEvaluate():String{
         return randomPoem.substring(randomPoem.lastIndexOf("n") + 1)
+    }
+
+    fun getFirstLines(context: Context): List<String>{
+        var titles: MutableList<String> = ArrayList()
+        var title = ""
+        for(i in 0..494){
+            getPoemData(context,i)
+            title = randomPoem.substring(0,randomPoem.indexOf("m"))
+            Log.d("allPoems",title)
+            titles.add(title)
+        }
+        return titles
     }
 
 //    fun getSharePoemsIntent(): Intent {

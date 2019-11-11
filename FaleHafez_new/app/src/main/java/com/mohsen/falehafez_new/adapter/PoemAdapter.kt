@@ -11,6 +11,7 @@ import kotlinx.android.synthetic.main.poem_item.view.*
 
 class PoemAdapter(val context: Context, val items: List<String>) : RecyclerView.Adapter<PoemAdapter.ItemHolder>() {
     class ItemHolder(view: View): RecyclerView.ViewHolder(view) {
+
         private val firstHistich: TextView = view.firstHemistich
         private val secondHistich: TextView = view.secondHemistich
 

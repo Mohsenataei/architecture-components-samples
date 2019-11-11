@@ -8,12 +8,17 @@ import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.mohsen.falehafez_new.R
+import com.mohsen.falehafez_new.adapter.AllPoemAdapter
+import com.mohsen.falehafez_new.util.ResourceHelper
+import kotlinx.android.synthetic.main.fragment_gallery.*
 
 
 class GalleryFragment : Fragment() {
 
     private lateinit var galleryViewModel: GalleryViewModel
+    lateinit var adapter: AllPoemAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -23,10 +28,19 @@ class GalleryFragment : Fragment() {
         galleryViewModel =
             ViewModelProviders.of(this).get(GalleryViewModel::class.java)
         val root = inflater.inflate(R.layout.fragment_gallery, container, false)
-        val textView: TextView = root.findViewById(R.id.text_gallery)
+      //  val textView: TextView = root.findViewById(R.id.text_gallery)
         galleryViewModel.text.observe(this, Observer {
-            textView.text = it
+           // textView.text = it
         })
         return root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        ResourceHelper.getInstance(activity!!).getPoemData(activity!!,0)
+        val list = ResourceHelper.getInstance(activity!!).getFirstLines(activity!!)
+        adapter = AllPoemAdapter(activity!!,list)
+        allPoemsRecycler.layoutManager = LinearLayoutManager(activity!!)
+        allPoemsRecycler.adapter = adapter
     }
 }
